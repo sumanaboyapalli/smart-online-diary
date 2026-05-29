@@ -17,7 +17,8 @@ public class SecurityConfig {
                                 "/hello",
                                 "/api/test",
                                 "/api/auth/register",
-                                "/api/auth/login"
+                                "/api/auth/login",
+                                "/api/diary/test"
                         ).permitAll()
                         .anyRequest().authenticated()
                 );
