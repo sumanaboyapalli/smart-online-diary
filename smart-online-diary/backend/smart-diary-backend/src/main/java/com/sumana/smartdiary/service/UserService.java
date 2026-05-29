@@ -17,6 +17,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
     public RegisterResponse register(RegisterRequest request) {
 
         User user = new User();
@@ -38,15 +41,17 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
 
         if (userOptional.isEmpty()) {
-            return new LoginResponse("Invalid email or password");
+            return new LoginResponse("Invalid email or password", null);
         }
 
         User user = userOptional.get();
 
         if (!user.getPassword().equals(request.getPassword())) {
-            return new LoginResponse("Invalid email or password");
+            return new LoginResponse("Invalid email or password", null);
         }
 
-        return new LoginResponse("Login successful");
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new LoginResponse("Login successful", token);
     }
 }
