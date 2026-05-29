@@ -10,4 +10,9 @@ public class TestController {
     public String hello() {
         return "Smart Diary Backend Running!";
     }
+
+    @GetMapping("/api/test")
+    public String test() {
+        return "Test API Working!";
+    }
 }
