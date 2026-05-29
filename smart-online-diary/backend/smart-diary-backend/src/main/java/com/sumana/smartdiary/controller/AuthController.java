@@ -1,5 +1,7 @@
 package com.sumana.smartdiary.controller;
 
+import com.sumana.smartdiary.dto.LoginRequest;
+import com.sumana.smartdiary.dto.LoginResponse;
 import com.sumana.smartdiary.dto.RegisterRequest;
 import com.sumana.smartdiary.dto.RegisterResponse;
 import com.sumana.smartdiary.service.UserService;
@@ -17,5 +19,10 @@ public class AuthController {
     @PostMapping("/register")
     public RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest request) {
+        return userService.login(request);
     }
 }

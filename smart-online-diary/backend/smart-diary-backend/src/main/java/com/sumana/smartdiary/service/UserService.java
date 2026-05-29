@@ -1,11 +1,15 @@
 package com.sumana.smartdiary.service;
 
+import com.sumana.smartdiary.dto.LoginRequest;
+import com.sumana.smartdiary.dto.LoginResponse;
 import com.sumana.smartdiary.dto.RegisterRequest;
 import com.sumana.smartdiary.dto.RegisterResponse;
 import com.sumana.smartdiary.entity.User;
 import com.sumana.smartdiary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,5 +31,22 @@ public class UserService {
                 savedUser.getId(),
                 savedUser.getEmail()
         );
+    }
+
+    public LoginResponse login(LoginRequest request) {
+
+        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
+
+        if (userOptional.isEmpty()) {
+            return new LoginResponse("Invalid email or password");
+        }
+
+        User user = userOptional.get();
+
+        if (!user.getPassword().equals(request.getPassword())) {
+            return new LoginResponse("Invalid email or password");
+        }
+
+        return new LoginResponse("Login successful");
     }
 }
