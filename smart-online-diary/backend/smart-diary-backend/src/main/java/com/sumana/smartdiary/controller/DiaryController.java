@@ -1,19 +1,27 @@
 package com.sumana.smartdiary.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
+import com.sumana.smartdiary.dto.DiaryRequest;
+import com.sumana.smartdiary.dto.DiaryResponse;
+import com.sumana.smartdiary.service.DiaryService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/diary")
 public class DiaryController {
 
-    @GetMapping("/api/diary/test")
-    public Map<String, String> test() {
+    private final DiaryService diaryService;
 
-        return Map.of(
-                "message",
-                "Protected diary endpoint"
-        );
+    public DiaryController(DiaryService diaryService) {
+        this.diaryService = diaryService;
+    }
+
+    @GetMapping("/test")
+    public java.util.Map<String, String> test() {
+        return java.util.Map.of("message", "Protected diary endpoint");
+    }
+
+    @PostMapping
+    public DiaryResponse createDiaryEntry(@RequestBody DiaryRequest request) {
+        return diaryService.createDiaryEntry(request);
     }
 }
