@@ -7,6 +7,7 @@ import com.sumana.smartdiary.repository.DiaryEntryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class DiaryService {
@@ -33,5 +34,19 @@ public class DiaryService {
         response.setContent(savedEntry.getContent());
 
         return response;
+    }
+
+    public List<DiaryResponse> getAllDiaryEntries() {
+
+        return diaryEntryRepository.findAll()
+                .stream()
+                .map(entry -> {
+                    DiaryResponse response = new DiaryResponse();
+                    response.setId(entry.getId());
+                    response.setTitle(entry.getTitle());
+                    response.setContent(entry.getContent());
+                    return response;
+                })
+                .toList();
     }
 }

@@ -5,6 +5,8 @@ import com.sumana.smartdiary.dto.DiaryResponse;
 import com.sumana.smartdiary.service.DiaryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/diary")
 public class DiaryController {
@@ -23,5 +25,10 @@ public class DiaryController {
     @PostMapping
     public DiaryResponse createDiaryEntry(@RequestBody DiaryRequest request) {
         return diaryService.createDiaryEntry(request);
+    }
+
+    @GetMapping
+    public List<DiaryResponse> getAllDiaryEntries() {
+        return diaryService.getAllDiaryEntries();
     }
 }
