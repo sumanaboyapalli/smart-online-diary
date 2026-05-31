@@ -49,4 +49,34 @@ public class DiaryService {
                 })
                 .toList();
     }
+    public DiaryResponse getDiaryEntryById(Long id) {
+
+        DiaryEntry entry = diaryEntryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Diary entry not found"));
+
+        DiaryResponse response = new DiaryResponse();
+        response.setId(entry.getId());
+        response.setTitle(entry.getTitle());
+        response.setContent(entry.getContent());
+
+        return response;
+    }
+    public DiaryResponse updateDiaryEntry(Long id, DiaryRequest request) {
+
+        DiaryEntry entry = diaryEntryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Diary entry not found"));
+
+        entry.setTitle(request.getTitle());
+        entry.setContent(request.getContent());
+        entry.setUpdatedAt(java.time.LocalDateTime.now());
+
+        DiaryEntry updatedEntry = diaryEntryRepository.save(entry);
+
+        DiaryResponse response = new DiaryResponse();
+        response.setId(updatedEntry.getId());
+        response.setTitle(updatedEntry.getTitle());
+        response.setContent(updatedEntry.getContent());
+
+        return response;
+    }
 }

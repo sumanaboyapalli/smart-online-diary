@@ -31,4 +31,15 @@ public class DiaryController {
     public List<DiaryResponse> getAllDiaryEntries() {
         return diaryService.getAllDiaryEntries();
     }
+    @GetMapping("/{id}")
+    public DiaryResponse getDiaryEntryById(@PathVariable Long id) {
+        return diaryService.getDiaryEntryById(id);
+    }
+    @PutMapping("/{id}")
+    public DiaryResponse updateDiaryEntry(
+            @PathVariable Long id,
+            @RequestBody DiaryRequest request) {
+
+        return diaryService.updateDiaryEntry(id, request);
+    }
 }
